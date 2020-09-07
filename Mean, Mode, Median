@@ -1,0 +1,48 @@
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Scanner;
+
+public class Statistics_1 {
+
+	private final static Scanner scan = new Scanner(System.in);
+	public static void main(String[] args) {
+		int N = scan.nextInt();
+		int[] list = new int[N];
+		for(int i=0; i<N; i++){
+			list[i] = scan.nextInt();
+		}
+		Arrays.sort(list);
+		
+		//Mean
+		double mean = 0;
+		for(int i:list){
+			mean +=i;
+		}
+		mean =  mean/list.length;
+		System.out.printf("%.1f %n",mean);
+		
+		//Median
+		double median = 0;
+		if(N%2 == 0){
+			median = list[(N/2)-1] + list[N/2];
+		} else{
+			median = list[(N/2)];
+		}
+		median = median/2;
+		System.out.printf("%.1f %n", median);
+		
+		//Mode
+		HashMap<Integer, Integer> map = new HashMap<>();
+		int maxCount = 0;
+		int mode = Integer.MAX_VALUE;
+		for(int m:list){
+			map.merge(m, 1, Integer::sum);
+			int occur = map.get(m);
+			if(occur> maxCount || (occur==maxCount && m<mode)){
+				maxCount = occur;
+				mode = m;
+			}
+		}
+		System.out.println(mode);
+	}
+}
